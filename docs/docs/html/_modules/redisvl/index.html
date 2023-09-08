@@ -1,0 +1,1011 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>redisvl.index &#8212; RedisVL</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/redisvl/index';</script>
+    <link rel="shortcut icon" href="../../_static/redis-cube-red-white-rgb.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/redis-cube-red-white-rgb.svg" class="logo__image only-light" alt="RedisVL"/>
+    <script>document.write(`<img src="../../_static/redis-cube-red-white-rgb.svg" class="logo__image only-dark" alt="RedisVL"/>`);</script>
+  
+  
+    <p class="title logo__title">RedisVL</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../user_guide/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples/index.html">
+                        Example Gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/RedisVentures/RedisVL" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../user_guide/index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples/index.html">
+                        Example Gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/RedisVentures/RedisVL" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">redisvl.index</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for redisvl.index</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">uuid4</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">redis.commands.search.field</span> <span class="kn">import</span> <span class="n">Field</span>
+    <span class="kn">from</span> <span class="nn">redis.commands.search.result</span> <span class="kn">import</span> <span class="n">Result</span>
+    <span class="kn">from</span> <span class="nn">redisvl.query.query</span> <span class="kn">import</span> <span class="n">BaseQuery</span>
+
+<span class="kn">import</span> <span class="nn">redis</span>
+<span class="kn">from</span> <span class="nn">redis.commands.search.indexDefinition</span> <span class="kn">import</span> <span class="n">IndexDefinition</span><span class="p">,</span> <span class="n">IndexType</span>
+
+<span class="kn">from</span> <span class="nn">redisvl.schema</span> <span class="kn">import</span> <span class="n">SchemaModel</span><span class="p">,</span> <span class="n">read_schema</span>
+<span class="kn">from</span> <span class="nn">redisvl.utils.connection</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">check_connected</span><span class="p">,</span>
+    <span class="n">get_async_redis_connection</span><span class="p">,</span>
+    <span class="n">get_redis_connection</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">redisvl.utils.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">check_redis_modules_exist</span><span class="p">,</span>
+    <span class="n">convert_bytes</span><span class="p">,</span>
+    <span class="n">make_dict</span><span class="p">,</span>
+    <span class="n">process_results</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SearchIndexBase</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rvl&quot;</span><span class="p">,</span>
+        <span class="n">storage_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Field&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="o">=</span> <span class="n">storage_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span> <span class="o">=</span> <span class="n">fields</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">set_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span> <span class="o">=</span> <span class="n">client</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The redis-py client object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            redis.Redis: The redis-py client object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span>  <span class="c1"># type: ignore</span>
+
+    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Result&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform a search on this index.</span>
+
+<span class="sd">        Wrapper around redis.search.Search that adds the index name</span>
+<span class="sd">        to the search query and passes along the rest of the arguments</span>
+<span class="sd">        to the redis-py ft.search() method.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Result]: A list of search results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Result&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="s2">&quot;BaseQuery&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run a query on this index.</span>
+
+<span class="sd">        This is similar to the search method, but takes a BaseQuery</span>
+<span class="sd">        object directly (does not allow for the usage of a raw</span>
+<span class="sd">        redis query string) and post-processes results of the search.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query (BaseQuery): The query to run.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Result]: A list of search results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">process_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_yaml</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">schema_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a SearchIndex from a YAML schema file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            schema_path (str): Path to the YAML schema file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SearchIndex: A SearchIndex object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">read_schema</span><span class="p">(</span><span class="n">schema_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">index_fields</span><span class="p">,</span> <span class="o">**</span><span class="n">schema</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">schema_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a SearchIndex from a dictionary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            schema_dict (Dict[str, Any]): A dictionary containing the schema.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SearchIndex: A SearchIndex object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="n">SchemaModel</span><span class="p">(</span><span class="o">**</span><span class="n">schema_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">index_fields</span><span class="p">,</span> <span class="o">**</span><span class="n">schema</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_existing</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Field&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a SearchIndex from an existing index in Redis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Index name.</span>
+<span class="sd">            url (Optional[str], optional): Redis URL. REDIS_URL env var</span>
+<span class="sd">                is used if not provided. Defaults to None.</span>
+<span class="sd">            fields (Optional[List[Field]], optional): List of Redis search</span>
+<span class="sd">                fields to include in the schema. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SearchIndex: A SearchIndex object.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">            ValueError: If the REDIS_URL env var is not set and url is not provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Connect to a Redis instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): Redis URL. REDIS_URL env var is used if not provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Disconnect from the Redis instance&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">key_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Construct the Redis HASH top level key.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            record (Dict[str, Any]): A dictionary containing the record to be indexed.</span>
+<span class="sd">            key_field (Optional[str], optional): A field within the record</span>
+<span class="sd">                to use in the Redis hash key.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The key to be used for a given record in Redis.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the key field is not found in the record.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key_field</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="n">key_field</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key field </span><span class="si">{</span><span class="n">key_field</span><span class="si">}</span><span class="s2"> not found in record </span><span class="si">{</span><span class="n">record</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="k">else</span> <span class="n">key</span>
+
+    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get information about the index.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: A dictionary containing the information about the index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">convert_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an index in Redis from this SearchIndex object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            overwrite (bool, optional): Overwrite the index if it already exists. Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drop</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete the search index.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drop (bool, optional): Delete the documents in the index. Defaults to True.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">key_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load data into Redis and index using this SearchIndex object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (Iterable[Dict[str, Any]]): An iterable of dictionaries</span>
+<span class="sd">                containing the data to be indexed.</span>
+<span class="sd">            key_field (Optional[str], optional): A field within the record</span>
+<span class="sd">                to use in the Redis hash key.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="SearchIndex"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex">[docs]</a><span class="k">class</span> <span class="nc">SearchIndex</span><span class="p">(</span><span class="n">SearchIndexBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class for interacting with Redis as a vector database.</span>
+
+<span class="sd">    This class is a wrapper around the redis-py client that provides</span>
+<span class="sd">    purpose-built methods for interacting with Redis as a vector database.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from redisvl.index import SearchIndex</span>
+<span class="sd">        &gt;&gt;&gt; index = SearchIndex.from_yaml(&quot;schema.yaml&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; index.create(overwrite=True)</span>
+<span class="sd">        &gt;&gt;&gt; index.load(data) # data is an iterable of dictionaries</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rvl&quot;</span><span class="p">,</span>
+        <span class="n">storage_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Field&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">storage_type</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SearchIndex.from_existing"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex.from_existing">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_existing</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Field&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a SearchIndex from an existing index in Redis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Index name.</span>
+<span class="sd">            url (Optional[str], optional): Redis URL. REDIS_URL env var</span>
+<span class="sd">                is used if not provided. Defaults to None.</span>
+<span class="sd">            fields (Optional[List[Field]], optional): List of Redis search</span>
+<span class="sd">                fields to include in the schema. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SearchIndex: A SearchIndex object.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">            ValueError: If the REDIS_URL env var is not set and url is not provided.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">get_redis_connection</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">convert_bytes</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+        <span class="n">index_definition</span> <span class="o">=</span> <span class="n">make_dict</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;index_definition&quot;</span><span class="p">])</span>
+        <span class="n">storage_type</span> <span class="o">=</span> <span class="n">index_definition</span><span class="p">[</span><span class="s2">&quot;key_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">index_definition</span><span class="p">[</span><span class="s2">&quot;prefixes&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">storage_type</span><span class="o">=</span><span class="n">storage_type</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">set_client</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">instance</span></div>
+
+<div class="viewcode-block" id="SearchIndex.connect"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Connect to a Redis instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): Redis URL. REDIS_URL env var is used if not provided.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ConnectionError: If the connection to Redis fails.</span>
+<span class="sd">            ValueError: If the REDIS_URL env var is not set and url is not provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span> <span class="o">=</span> <span class="n">get_redis_connection</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SearchIndex.create"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex.create">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an index in Redis from this SearchIndex object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            overwrite (bool, optional): Overwrite the index if it already exists. Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_redis_modules_exist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No fields defined for index&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+        <span class="c1"># set storage_type, default to hash</span>
+        <span class="n">storage_type</span> <span class="o">=</span> <span class="n">IndexType</span><span class="o">.</span><span class="n">HASH</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+            <span class="n">storage_type</span> <span class="o">=</span> <span class="n">IndexType</span><span class="o">.</span><span class="n">JSON</span>
+
+        <span class="c1"># Create Index</span>
+        <span class="c1"># will raise correct response error if index already exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+            <span class="n">fields</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span>
+            <span class="n">definition</span><span class="o">=</span><span class="n">IndexDefinition</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">],</span> <span class="n">index_type</span><span class="o">=</span><span class="n">storage_type</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SearchIndex.delete"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex.delete">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drop</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete the search index.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drop (bool, optional): Delete the documents in the index. Defaults to True.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Delete the search index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">dropindex</span><span class="p">(</span><span class="n">delete_documents</span><span class="o">=</span><span class="n">drop</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
+
+<div class="viewcode-block" id="SearchIndex.load"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex.load">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">key_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load data into Redis and index using this SearchIndex object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (Iterable[Dict[str, Any]]): An iterable of dictionaries</span>
+<span class="sd">                containing the data to be indexed.</span>
+<span class="sd">            key_field (Optional[str], optional): A field within the record to</span>
+<span class="sd">                use in the Redis hash key.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO -- should we return a count of the upserts? or some kind of metadata?</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;data must be an iterable of dictionaries&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Check if outer interface passes in TTL on load</span>
+            <span class="n">ttl</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ttl&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">pipeline</span><span class="p">(</span><span class="n">transaction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">pipe</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_key</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">key_field</span><span class="p">)</span>
+                    <span class="n">pipe</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="n">record</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+                    <span class="k">if</span> <span class="n">ttl</span><span class="p">:</span>
+                        <span class="n">pipe</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span>
+                <span class="n">pipe</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SearchIndex.exists"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.SearchIndex.exists">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the index exists in Redis.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the index exists, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">convert_bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;FT._LIST&quot;</span><span class="p">))</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">in</span> <span class="n">indices</span></div></div>
+
+
+<div class="viewcode-block" id="AsyncSearchIndex"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex">[docs]</a><span class="k">class</span> <span class="nc">AsyncSearchIndex</span><span class="p">(</span><span class="n">SearchIndexBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class for interacting with Redis as a vector database asynchronously.</span>
+
+<span class="sd">    This class is a wrapper around the redis-py client that provides</span>
+<span class="sd">    purpose-built methods for interacting with Redis as a vector database.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from redisvl.index import AsyncSearchIndex</span>
+<span class="sd">        &gt;&gt;&gt; index = AsyncSearchIndex.from_yaml(&quot;schema.yaml&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; index.create(overwrite=True)</span>
+<span class="sd">        &gt;&gt;&gt; index.load(data) # data is an iterable of dictionaries</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rvl&quot;</span><span class="p">,</span>
+        <span class="n">storage_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hash&quot;</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Field&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">storage_type</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AsyncSearchIndex.from_existing"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.from_existing">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">from_existing</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Field&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a SearchIndex from an existing index in Redis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Index name.</span>
+<span class="sd">            url (Optional[str], optional): Redis URL. REDIS_URL env var</span>
+<span class="sd">                is used if not provided. Defaults to None.</span>
+<span class="sd">            fields (Optional[List[Field]], optional): List of Redis search</span>
+<span class="sd">                fields to include in the schema. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SearchIndex: A SearchIndex object.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">            ValueError: If the REDIS_URL env var is not set and url is not provided.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">get_async_redis_connection</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">convert_bytes</span><span class="p">(</span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+        <span class="n">index_definition</span> <span class="o">=</span> <span class="n">make_dict</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;index_definition&quot;</span><span class="p">])</span>
+        <span class="n">storage_type</span> <span class="o">=</span> <span class="n">index_definition</span><span class="p">[</span><span class="s2">&quot;key_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">index_definition</span><span class="p">[</span><span class="s2">&quot;prefixes&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">storage_type</span><span class="o">=</span><span class="n">storage_type</span><span class="p">,</span>
+            <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span>
+            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">set_client</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">instance</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.connect"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Connect to a Redis instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str): Redis URL. REDIS_URL env var is used if not provided.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ConnectionError: If the connection to Redis fails.</span>
+<span class="sd">            ValueError: If no Redis URL is provided and REDIS_URL env var is not set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span> <span class="o">=</span> <span class="n">get_async_redis_connection</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.create"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.create">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an index in Redis from this SearchIndex object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            overwrite (bool, optional): Overwrite the index if it already exists. Defaults to False.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index already exists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">exists</span> <span class="ow">and</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+        <span class="c1"># set storage_type, default to hash</span>
+        <span class="n">storage_type</span> <span class="o">=</span> <span class="n">IndexType</span><span class="o">.</span><span class="n">HASH</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+            <span class="n">storage_type</span> <span class="o">=</span> <span class="n">IndexType</span><span class="o">.</span><span class="n">JSON</span>
+
+        <span class="c1"># Create Index</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">create_index</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+            <span class="n">fields</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span>
+            <span class="n">definition</span><span class="o">=</span><span class="n">IndexDefinition</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">],</span> <span class="n">index_type</span><span class="o">=</span><span class="n">storage_type</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.delete"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.delete">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drop</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete the search index.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            drop (bool, optional): Delete the documents in the index. Defaults to True.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Delete the search index</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">dropindex</span><span class="p">(</span><span class="n">delete_documents</span><span class="o">=</span><span class="n">drop</span><span class="p">)</span>  <span class="c1"># type: ignore</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.load"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.load">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">concurrency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">key_field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load data into Redis and index using this SearchIndex object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (Iterable[Dict[str, Any]]): An iterable of dictionaries</span>
+<span class="sd">                containing the data to be indexed.</span>
+<span class="sd">            concurrency (int, optional): Number of concurrent tasks to run. Defaults to 10.</span>
+<span class="sd">            key_field (Optional[str], optional): A field within the record to</span>
+<span class="sd">                use in the Redis hash key.</span>
+
+<span class="sd">        raises:</span>
+<span class="sd">            redis.exceptions.ResponseError: If the index does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ttl</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ttl&quot;</span><span class="p">)</span>
+        <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">concurrency</span><span class="p">)</span>
+
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span><span class="n">record</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_key</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">key_field</span><span class="p">)</span>
+                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">mapping</span><span class="o">=</span><span class="n">record</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+                <span class="k">if</span> <span class="n">ttl</span><span class="p">:</span>
+                    <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ttl</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+        <span class="c1"># gather with concurrency</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">_load</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.search"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.search">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Result&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Perform a search on this index.</span>
+
+<span class="sd">        Wrapper around redis.search.Search that adds the index name</span>
+<span class="sd">        to the search query and passes along the rest of the arguments</span>
+<span class="sd">        to the redis-py ft.search() method.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Result]: A list of search results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;Result&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">ft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.query"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.query">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="s2">&quot;BaseQuery&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run a query on this index.</span>
+
+<span class="sd">        This is similar to the search method, but takes a BaseQuery</span>
+<span class="sd">        object directly (does not allow for the usage of a raw</span>
+<span class="sd">        redis query string) and post-processes results of the search.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query (BaseQuery): The query to run.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[Result]: A list of search results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">process_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AsyncSearchIndex.exists"><a class="viewcode-back" href="../../api/searchindex.html#redisvl.index.AsyncSearchIndex.exists">[docs]</a>    <span class="nd">@check_connected</span><span class="p">(</span><span class="s2">&quot;_redis_conn&quot;</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the index exists in Redis.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the index exists, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redis_conn</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;FT._LIST&quot;</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">in</span> <span class="n">convert_bytes</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span></div></div>
+</pre></div>
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Redis Inc..
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2EW85FTY8C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2EW85FTY8C');
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,844 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <link href="../_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="../_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
+    <link rel="shortcut icon" sizes="any" href="../_static/favicon.ico" type="image/x-icon">
+    <link href="../_static/android-chrome-192x192.png" sizes="192x192" rel="icon" type="image/png">
+    <link rel="apple-touch-icon" href="../_static/apple-touch-icon.png" sizes="180x180" type="image/png">
+    <title>Getting Started with RedisVL &#8212; RedisVL</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/design-tabs.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user_guide/getting_started_01';</script>
+    <link rel="shortcut icon" href="../_static/redis-cube-red-white-rgb.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Query" href="hybrid_queries_02.html" />
+    <link rel="prev" title="User Guide" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/redis-cube-red-white-rgb.svg" class="logo__image only-light" alt="RedisVL"/>
+    <script>document.write(`<img src="../_static/redis-cube-red-white-rgb.svg" class="logo__image only-dark" alt="RedisVL"/>`);</script>
+  
+  
+    <p class="title logo__title">RedisVL</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class=" navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Example Gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/RedisVentures/RedisVL" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        User Guide
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Example Gallery
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/RedisVentures/RedisVL" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started with RedisVL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_queries_02.html">Query</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorizers_03.html">Vectorizers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llmcache_03.html">Semantic Caching</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Getting Started with RedisVL</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="getting-started-with-redisvl">
+<h1>Getting Started with RedisVL<a class="headerlink" href="#getting-started-with-redisvl" title="Permalink to this heading">#</a></h1>
+<p>RedisVL is a Python library with a dedicated CLI to help load and create vector search indices within Redis. While</p>
+<p>This notebook will walk through</p>
+<ol class="arabic simple">
+<li><p>Preparing a dataset with vectors.</p></li>
+<li><p>Writing data schema for <code class="docutils literal notranslate"><span class="pre">redis</span></code></p></li>
+<li><p>Loading the data and creating a vector search index</p></li>
+<li><p>Performing queries</p></li>
+</ol>
+<p>Before running this notebook, be sure to</p>
+<ol class="arabic simple">
+<li><p>Have installed <code class="docutils literal notranslate"><span class="pre">redisvl</span></code> and have that environment active for this notebook.</p></li>
+<li><p>Have a running Redis instance with RediSearch &gt; 2.4 running.</p></li>
+</ol>
+<section id="data-preparation">
+<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h2>
+<p>For this example, we will use the following overly simplified dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">jupyterutils</span> <span class="kn">import</span> <span class="n">table_print</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;john&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;job&#39;</span><span class="p">:</span> <span class="s1">&#39;engineer&#39;</span><span class="p">,</span> <span class="s1">&#39;credit_score&#39;</span><span class="p">:</span> <span class="s1">&#39;high&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;mary&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;job&#39;</span><span class="p">:</span> <span class="s1">&#39;doctor&#39;</span><span class="p">,</span> <span class="s1">&#39;credit_score&#39;</span><span class="p">:</span> <span class="s1">&#39;low&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;joe&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;job&#39;</span><span class="p">:</span> <span class="s1">&#39;dentist&#39;</span><span class="p">,</span> <span class="s1">&#39;credit_score&#39;</span><span class="p">:</span> <span class="s1">&#39;medium&#39;</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This will make up 3 entries in Redis (hashes) each with 4 sub-keys (users, age, job, credit_score).</p>
+<p>Now, we want to add vectors to represent each user. These are just dummy vectors to illustrate the point, but more complex vectors can be created and used as well. For more information on creating embeddings, see this <a class="reference external" href="https://mlops.community/vector-similarity-search-from-basics-to-production/">article</a>.</p>
+<p>As seen below, the sample vectors need to be turned into bytes before they can be loaded into Redis. Using <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>, this is fairly trivial.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># converted to bytes for redis</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">record</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vectors</span><span class="p">):</span>
+    <span class="n">record</span><span class="p">[</span><span class="s2">&quot;user_embedding&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+
+<span class="n">table_print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>user</th><th>age</th><th>job</th><th>credit_score</th><th>user_embedding</th></tr><tr><td>john</td><td>1</td><td>engineer</td><td>high</td><td>b'\xcd\xcc\xcc=\xcd\xcc\xcc=\x00\x00\x00?'</td></tr><tr><td>mary</td><td>2</td><td>doctor</td><td>low</td><td>b'\xcd\xcc\xcc=\xcd\xcc\xcc=\x00\x00\x00?'</td></tr><tr><td>joe</td><td>3</td><td>dentist</td><td>medium</td><td>b'fff?fff?\xcd\xcc\xcc='</td></tr></table></div></div>
+</div>
+<p>Our dataset is now ready to be used with <code class="docutils literal notranslate"><span class="pre">redisvl</span></code>. The next step is to define the schema for the data.</p>
+</section>
+<section id="define-index-schema">
+<h2>Define Index Schema<a class="headerlink" href="#define-index-schema" title="Permalink to this heading">#</a></h2>
+<p>In order for <code class="docutils literal notranslate"><span class="pre">redisvl</span></code> to be flexible for many types of data, it uses a schema specified in either a python dictionary or a yaml file. There are a couple main components</p>
+<ol class="arabic simple">
+<li><p>index specification</p></li>
+<li><p>field specification</p></li>
+</ol>
+<p>The index specification determines how data will be stored in Redis. This includes</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: the name of the index</p></li>
+<li><p>(Optional) <code class="docutils literal notranslate"><span class="pre">prefix</span></code>: key prefix for each loaded entry</p></li>
+</ul>
+<p>The field specification determines what fields within the dataset will be available for queries. Each field corresponds to the name of a <strong>column</strong> within the dataset. The values within each specified column are arguments for the creation of that index that correspond directly to <code class="docutils literal notranslate"><span class="pre">redis-py</span></code> arguments.</p>
+<p>So for example, given the above dataset, the following schema can be used.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">index</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user_index</span>
+<span class="w">  </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+
+<span class="nt">fields</span><span class="p">:</span>
+<span class="w">    </span><span class="c1"># define tag fields</span>
+<span class="w">    </span><span class="nt">tag</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">job</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">credit_store</span>
+<span class="w">    </span><span class="c1"># define numeric fields</span>
+<span class="w">    </span><span class="nt">numeric</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">age</span>
+<span class="w">    </span><span class="c1"># define vector fields</span>
+<span class="w">    </span><span class="nt">vector</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user_embedding</span>
+<span class="w">          </span><span class="nt">algorithm</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hnsw</span>
+<span class="w">          </span><span class="nt">distance_metric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cosine</span>
+</pre></div>
+</div>
+<p>In Python, this looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;user_index&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;prefix&quot;</span><span class="p">:</span> <span class="s2">&quot;v1&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;credit_score&quot;</span><span class="p">}],</span>
+        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;job&quot;</span><span class="p">}],</span>
+        <span class="s2">&quot;numeric&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;age&quot;</span><span class="p">}],</span>
+        <span class="s2">&quot;vector&quot;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;user_embedding&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;dims&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="s2">&quot;distance_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;algorithm&quot;</span><span class="p">:</span> <span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;datatype&quot;</span><span class="p">:</span> <span class="s2">&quot;float32&quot;</span><span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-a-searchindex">
+<h2>Create a <code class="docutils literal notranslate"><span class="pre">SearchIndex</span></code><a class="headerlink" href="#create-a-searchindex" title="Permalink to this heading">#</a></h2>
+<p>With the data and the index schema defined, we can now use <code class="docutils literal notranslate"><span class="pre">redisvl</span></code> as a library to create a search index as follows.</p>
+<p>Note that at this point, the index will have no entries. With Redis, this is fine as new entries from this index (or that follow the schema) will automatically be indexed in the background in Redis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">redisvl.index</span> <span class="kn">import</span> <span class="n">SearchIndex</span>
+
+<span class="c1"># construct a search index from the schema</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">SearchIndex</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span> <span class="c1"># or SearchIndex.from_yaml(&quot;schema.yaml&quot;) for yaml files</span>
+
+<span class="c1"># connect to local redis instance</span>
+<span class="n">index</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;redis://localhost:6379&quot;</span><span class="p">)</span>
+
+<span class="c1"># create the index (no data yet)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the CLI to see the created index</span>
+<span class="o">!</span>rvl<span class="w"> </span>index<span class="w"> </span>listall
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">15:14:34</span> <span class=" -Color -Color-Blue">[RedisVL]</span> <span class=" -Color -Color-Bold -Color-Bold-Black">INFO</span>   Indices:
+<span class=" -Color -Color-Green">15:14:34</span> <span class=" -Color -Color-Blue">[RedisVL]</span> <span class=" -Color -Color-Bold -Color-Bold-Black">INFO</span>   1. user_index
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the CLI to print fields in the index</span>
+<span class="o">!</span>rvl<span class="w"> </span>index<span class="w"> </span>info<span class="w"> </span>-i<span class="w"> </span>user_index
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index Information:
+╭──────────────┬────────────────┬────────────┬─────────────────┬────────────╮
+│ Index Name   │ Storage Type   │ Prefixes   │ Index Options   │   Indexing │
+├──────────────┼────────────────┼────────────┼─────────────────┼────────────┤
+│ user_index   │ HASH           │ [&#39;v1&#39;]     │ []              │          0 │
+╰──────────────┴────────────────┴────────────┴─────────────────┴────────────╯
+Index Fields:
+╭────────────────┬────────────────┬─────────┬────────────────┬────────────────╮
+│ Name           │ Attribute      │ Type    │ Field Option   │ Option Value   │
+├────────────────┼────────────────┼─────────┼────────────────┼────────────────┤
+│ credit_score   │ credit_score   │ TAG     │ SEPARATOR      │ ,              │
+│ job            │ job            │ TEXT    │ WEIGHT         │ 1              │
+│ age            │ age            │ NUMERIC │                │                │
+│ user_embedding │ user_embedding │ VECTOR  │                │                │
+╰────────────────┴────────────────┴─────────┴────────────────┴────────────────╯
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-data-into-the-index">
+<h2>Load Data into the Index<a class="headerlink" href="#load-data-into-the-index" title="Permalink to this heading">#</a></h2>
+<p>Now that an index exists, data can be loaded into redis through the <code class="docutils literal notranslate"><span class="pre">SearchIndex.load()</span></code> function</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load expects an iterable of dictionaries</span>
+<span class="n">index</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="executing-queries">
+<h2>Executing Queries<a class="headerlink" href="#executing-queries" title="Permalink to this heading">#</a></h2>
+<p>Next we will run a vector query on our newly populated index. This example will use a simple vector to demonstrate how vector similarity works. Vectors in production will be much larger than 3 floats and often require Machine Learning models (i.e. Huggingface sentence transformers) or an embeddings API (Cohere, OpenAI) to create.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">redisvl.query</span> <span class="kn">import</span> <span class="n">VectorQuery</span>
+<span class="kn">from</span> <span class="nn">jupyterutils</span> <span class="kn">import</span> <span class="n">result_print</span>
+
+<span class="c1"># create a vector query returning a number of results</span>
+<span class="c1"># with specific fields to return.</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">VectorQuery</span><span class="p">(</span>
+    <span class="n">vector</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+    <span class="n">vector_field_name</span><span class="o">=</span><span class="s2">&quot;user_embedding&quot;</span><span class="p">,</span>
+    <span class="n">return_fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;job&quot;</span><span class="p">,</span> <span class="s2">&quot;credit_score&quot;</span><span class="p">,</span> <span class="s2">&quot;vector_distance&quot;</span><span class="p">],</span>
+    <span class="n">num_results</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+
+<span class="c1"># use the SearchIndex instance (or Redis client) to execute the query</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">result_print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>id</th><th>vector_distance</th><th>user</th><th>age</th><th>job</th><th>credit_score</th></tr><tr><td>v1:1d91681e86f64175ac2a85d5c0d82c04</td><td>0</td><td>john</td><td>1</td><td>engineer</td><td>high</td></tr><tr><td>v1:336fba2e3e8846d0be5689a8f21da149</td><td>0</td><td>mary</td><td>2</td><td>doctor</td><td>low</td></tr><tr><td>v1:3a059b1b202c416f9a661ed1b60e7d61</td><td>0.653301358223</td><td>joe</td><td>3</td><td>dentist</td><td>medium</td></tr></table></div></div>
+</div>
+</section>
+<section id="connecting-to-an-existing-index">
+<h2>Connecting to an Existing Index<a class="headerlink" href="#connecting-to-an-existing-index" title="Permalink to this heading">#</a></h2>
+<p>If you have an existing index, you can connect to it using the <code class="docutils literal notranslate"><span class="pre">SearchIndex.from_existing()</span></code> function. This will return a <code class="docutils literal notranslate"><span class="pre">SearchIndex</span></code> object that can be used to execute queries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a new SearchIndex instance from an existing index</span>
+<span class="n">existing_index</span> <span class="o">=</span> <span class="n">SearchIndex</span><span class="o">.</span><span class="n">from_existing</span><span class="p">(</span><span class="s2">&quot;user_index&quot;</span><span class="p">,</span> <span class="s2">&quot;redis://localhost:6379&quot;</span><span class="p">)</span>
+
+<span class="c1"># run the same query</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">existing_index</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">result_print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>id</th><th>vector_distance</th><th>user</th><th>age</th><th>job</th><th>credit_score</th></tr><tr><td>v1:1d91681e86f64175ac2a85d5c0d82c04</td><td>0</td><td>john</td><td>1</td><td>engineer</td><td>high</td></tr><tr><td>v1:336fba2e3e8846d0be5689a8f21da149</td><td>0</td><td>mary</td><td>2</td><td>doctor</td><td>low</td></tr><tr><td>v1:3a059b1b202c416f9a661ed1b60e7d61</td><td>0.653301358223</td><td>joe</td><td>3</td><td>dentist</td><td>medium</td></tr></table></div></div>
+</div>
+</section>
+<section id="asynchronous-search">
+<h2>Asynchronous Search<a class="headerlink" href="#asynchronous-search" title="Permalink to this heading">#</a></h2>
+<p>The AsyncSearchIndex class allows for queries, index creation, and data loading to be done asynchronously. This is useful for large datasets that may take a long time to load into Redis, for queries that may take a long time to execute, or for asynchronous applications that need to execute queries in the background like a FastAPI application.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Asynchronous Search</span>
+<span class="kn">from</span> <span class="nn">redisvl.index</span> <span class="kn">import</span> <span class="n">AsyncSearchIndex</span>
+
+<span class="c1"># construct a search index from the schema</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">AsyncSearchIndex</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+<span class="c1"># connect to local redis instance</span>
+<span class="n">index</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;redis://localhost:6379&quot;</span><span class="p">)</span>
+
+<span class="c1"># create the index (no data yet)</span>
+<span class="k">await</span> <span class="n">index</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># load the data again but asynchronously</span>
+<span class="k">await</span> <span class="n">index</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># run the same vector query but asynchronously</span>
+<span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">index</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="n">result_print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><tr><th>id</th><th>vector_distance</th><th>user</th><th>age</th><th>job</th><th>credit_score</th></tr><tr><td>v1:a88e113051364b94bbefa29d6234725d</td><td>0</td><td>john</td><td>1</td><td>engineer</td><td>high</td></tr><tr><td>v1:f850fc9073b8420984acfc79e960fdb4</td><td>0</td><td>mary</td><td>2</td><td>doctor</td><td>low</td></tr><tr><td>v1:c0aecbe4ffe14c15b574563228ea000e</td><td>0.653301358223</td><td>joe</td><td>3</td><td>dentist</td><td>medium</td></tr></table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can also use the CLI to check the stats for the index we just used</span>
+<span class="o">!</span>rvl<span class="w"> </span>stats<span class="w"> </span>-i<span class="w"> </span>user_index
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistics:
+╭─────────────────────────────┬─────────────╮
+│ Stat Key                    │ Value       │
+├─────────────────────────────┼─────────────┤
+│ num_docs                    │ 3           │
+│ num_terms                   │ 4           │
+│ max_doc_id                  │ 3           │
+│ num_records                 │ 13          │
+│ percent_indexed             │ 1           │
+│ hash_indexing_failures      │ 0           │
+│ number_of_uses              │ 3           │
+│ bytes_per_record_avg        │ 2.46154     │
+│ doc_table_size_mb           │ 0.000294685 │
+│ inverted_sz_mb              │ 3.05176e-05 │
+│ key_table_size_mb           │ 0.000110626 │
+│ offset_bits_per_record_avg  │ 8           │
+│ offset_vectors_sz_mb        │ 3.8147e-06  │
+│ offsets_per_term_avg        │ 0.307692    │
+│ records_per_doc_avg         │ 4.33333     │
+│ sortable_values_size_mb     │ 0           │
+│ total_indexing_time         │ 0.1         │
+│ total_inverted_index_blocks │ 8           │
+│ vector_index_sz_mb          │ 0.164604    │
+╰─────────────────────────────┴─────────────╯
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># clean up the index</span>
+<span class="k">await</span> <span class="n">index</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hybrid_queries_02.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Query</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">Data Preparation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-index-schema">Define Index Schema</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-searchindex">Create a <code class="docutils literal notranslate"><span class="pre">SearchIndex</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-into-the-index">Load Data into the Index</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#executing-queries">Executing Queries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-to-an-existing-index">Connecting to an Existing Index</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asynchronous-search">Asynchronous Search</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/RedisVentures/RedisVL/edit/main/docs/user_guide/getting_started_01.ipynb">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../_sources/user_guide/getting_started_01.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Redis Inc..
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2EW85FTY8C"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2EW85FTY8C');
+</script>
+
+  </body>
+</html>
