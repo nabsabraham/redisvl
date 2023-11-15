@@ -1,8 +1,3 @@
-
-
-from langchain.schema.vectorstore import VectorStore, VectorStoreRetriever
-
-
 from __future__ import annotations
 
 import logging
@@ -31,17 +26,7 @@ from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.docstore.document import Document
 from langchain.schema.embeddings import Embeddings
 from langchain.schema.vectorstore import VectorStore, VectorStoreRetriever
-from langchain.utilities.redis import (
-    _array_to_buffer,
-    _buffer_to_array,
-    check_redis_module_exist,
-    get_client,
-)
 from langchain.utils import get_from_dict_or_env
-from langchain.vectorstores.redis.constants import (
-    REDIS_REQUIRED_MODULES,
-    REDIS_TAG_SEPARATOR,
-)
 from langchain.vectorstores.utils import maximal_marginal_relevance
 
 from redisvl.index import SearchIndex
@@ -53,48 +38,9 @@ from redisvl.integrations.langchain.schema import (
 
 logger = logging.getLogger(__name__)
 
-if TYPE_CHECKING:
-    from redis.client import Redis as RedisType
-    from redis.commands.search.query import Query
-
-    from langchain.vectorstores.redis.filters import RedisFilterExpression
-    from langchain.vectorstores.redis.schema import RedisModel
-
 
 def _default_relevance_score(val: float) -> float:
     return 1 - val
-
-def connect_from_env_or_kwargs(kwargs) -> SearchIndex:
-    """Connect to a Redis index from kwargs or environment variables.
-
-    Args:
-        kwargs (Dict[str, Any]): Keyword arguments.
-
-    Returns:
-        SearchIndex: Redis search index.
-    """
-    redis_url = get_from_dict_or_env(kwargs, "redis_url", "REDIS_URL")
-    try:
-        # TODO use importlib to check if redis is installed
-        import redis  # noqa: F401
-
-    except ImportError as e:
-        raise ImportError(
-            "Could not import redis python package. "
-            "Please install it with `pip install redis`."
-        ) from e
-
-    try:
-        # We need to first remove redis_url from kwargs,
-        # otherwise passing it to Redis will result in an error.
-        if "redis_url" in kwargs:
-            kwargs.pop("redis_url")
-        index_name = get_from_dict_or_env(kwargs, "index_name", "REDIS_INDEX_NAME")
-        index = SearchIndex(index_name).connect(url=redis_url, **kwargs)
-    except ValueError as e:
-        raise ValueError(f"Your redis connected error: {e}")
-    return index
-
 
 class Redis(VectorStore):
 
@@ -610,8 +556,6 @@ class Redis(VectorStore):
             return_score=with_distance,
         )
 
-
-
     def _calculate_fp_distance(self, distance: str) -> float:
         """Calculate the distance based on the vector datatype
 
@@ -625,24 +569,6 @@ class Redis(VectorStore):
         if self._schema.content_vector.datatype == "FLOAT32":
             return round(float(distance), 4)
         return round(float(distance), 7)
-
-    def _check_deprecated_kwargs(self, kwargs: Mapping[str, Any]) -> None:
-        """Check for deprecated kwargs."""
-
-        deprecated_kwargs = {
-            "redis_host": "redis_url",
-            "redis_port": "redis_url",
-            "redis_password": "redis_url",
-            "content_key": "index_schema",
-            "vector_key": "vector_schema",
-            "distance_metric": "vector_schema",
-        }
-        for key, value in kwargs.items():
-            if key in deprecated_kwargs:
-                raise ValueError(
-                    f"Keyword argument '{key}' is deprecated. "
-                    f"Please use '{deprecated_kwargs[key]}' instead."
-                )
 
     def _select_relevance_score_fn(self) -> Callable[[float], float]:
         if self.relevance_score_fn:
