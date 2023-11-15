@@ -15,101 +15,14 @@ from redisvl.schema import (
     TextFieldSchema,
     NumericFieldSchema,
     TagFieldSchema,
-    BaseField
+    BaseField,
     HNSWVectorField,
-    FlatVectorField
-
+    FlatVectorField,
+    ExtraField,
+    read_schema
 )
 
-class RedisDistanceMetric(str, Enum):
-    """Distance metrics for Redis vector fields."""
-
-    l2 = "L2"
-    cosine = "COSINE"
-    ip = "IP"
-
-
-class TextFieldSchema(RedisField):
-    """Schema for text fields in Redis."""
-
-    weight: float = 1
-    no_stem: bool = False
-    phonetic_matcher: Optional[str] = None
-    withsuffixtrie: bool = False
-    no_index: bool = False
-    sortable: Optional[bool] = False
-
-    def as_field(self) -> TextField:
-        from redis.commands.search.field import TextField  # type: ignore
-
-        return TextField(
-            self.name,
-            weight=self.weight,
-            no_stem=self.no_stem,
-            phonetic_matcher=self.phonetic_matcher,  # type: ignore
-            sortable=self.sortable,
-            no_index=self.no_index,
-        )
-
-
-class TagFieldSchema(RedisField):
-    """Schema for tag fields in Redis."""
-
-    separator: str = ","
-    case_sensitive: bool = False
-    no_index: bool = False
-    sortable: Optional[bool] = False
-
-    def as_field(self) -> TagField:
-        from redis.commands.search.field import TagField  # type: ignore
-
-        return TagField(
-            self.name,
-            separator=self.separator,
-            case_sensitive=self.case_sensitive,
-            sortable=self.sortable,
-            no_index=self.no_index,
-        )
-
-
-class NumericFieldSchema(RedisField):
-    """Schema for numeric fields in Redis."""
-
-    no_index: bool = False
-    sortable: Optional[bool] = False
-
-    def as_field(self) -> NumericField:
-        from redis.commands.search.field import NumericField  # type: ignore
-
-        return NumericField(self.name, sortable=self.sortable, no_index=self.no_index)
-
-
-class RedisVectorField(RedisField):
-    """Base class for Redis vector fields."""
-
-    dims: int = Field(...)
-    algorithm: object = Field(...)
-    datatype: str = Field(default="FLOAT32")
-    distance_metric: RedisDistanceMetric = Field(default="COSINE")
-    initial_cap: Optional[int] = None
-
-    @validator("algorithm", "datatype", "distance_metric", pre=True, each_item=True)
-    def uppercase_strings(cls, v: str) -> str:
-        return v.upper()
-
-
-
-
-
 class LCFieldsModel(FieldsModel):
-    # always have a content field for text
-    text: List[TextFieldSchema] = [TextFieldSchema(name="content")]
-    tag: Optional[List[TagFieldSchema]] = None
-    numeric: Optional[List[NumericFieldSchema]] = None
-    extra: Optional[List[RedisField]] = None
-
-    # filled by default_vector_schema
-    vector: Optional[List[Union[FlatVectorField, HNSWVectorField]]] = None
     content_key: str = "content"
     content_vector_key: str = "content_vector"
 

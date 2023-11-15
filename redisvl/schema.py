@@ -185,6 +185,7 @@ class FieldsModel(BaseModel):
     numeric: Optional[List[NumericFieldSchema]] = None
     geo: Optional[List[GeoFieldSchema]] = None
     vector: Optional[List[Union[FlatVectorField, HNSWVectorField]]] = None
+    extra: Optional[List[ExtraField]] = None
 
     @property
     def is_empty(self) -> bool:
