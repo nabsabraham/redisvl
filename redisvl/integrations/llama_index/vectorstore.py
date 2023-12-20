@@ -3,9 +3,8 @@
 An index that that is built on top of an existing vector store.
 """
 import logging
-from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
-import fsspec
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 
 from llama_index.bridge.pydantic import PrivateAttr
 from llama_index.schema import (
@@ -23,9 +22,11 @@ from llama_index.vector_stores.types import (
 )
 from llama_index.vector_stores.utils import metadata_dict_to_node, node_to_metadata_dict
 
+from redis import Redis
+
 from redisvl.utils.utils import array_to_buffer
 from redisvl.index import SearchIndex
-from redisvl.query import VectorQuery
+from redisvl.query import VectorQuery, CountQuery, FilterQuery
 from redisvl.query.filter import Tag, FilterExpression
 from redisvl.integrations.llama_index.schema import LlamaIndexSchema
 
@@ -35,16 +36,6 @@ _logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from redis.client import Redis as RedisType
     from redis.commands.search.field import VectorField
-
-
-# currently only supports exact tag match - {} denotes a tag
-# must create the index with the correct metadata field before using a field as a
-#   filter, or it will return no results
-def create_filter_expression(metadata_filters: MetadataFilters) -> FilterExpression:
-    filter_expression = FilterExpression("*")
-    for filter in metadata_filters.filters:
-        filter_expression = filter_expression & (Tag(filter.key) == filter.value)
-    return filter_expression
 
 
 class RedisVectorStore(BasePydanticVectorStore):
@@ -62,11 +53,12 @@ class RedisVectorStore(BasePydanticVectorStore):
     def __init__(
         self,
         index_name: str,
+        client: Redis,
         index_prefix: str = "llama_index",
         prefix_ending: str = "/vector",
-        vector_field_args: Optional[Dict[str, Any]] = None,
-        metadata_fields: Optional[List[str]] = None,
-        redis_url: str = "redis://localhost:6379",
+        vector_field_args: Dict[str, Any] = {},
+        metadata_fields: List[str] = [],
+        # redis_url: str = "redis://localhost:6379",
         overwrite: bool = False,
         **kwargs: Any,
     ) -> None:
@@ -82,6 +74,7 @@ class RedisVectorStore(BasePydanticVectorStore):
 
         Args:
             index_name (str): Name of the index.
+            client (Redis): The redis client instance.
             index_prefix (str): Prefix for the index. Defaults to "llama_index".
                 The actual prefix used by Redis will be
                 "{index_prefix}{prefix_ending}".
@@ -92,8 +85,6 @@ class RedisVectorStore(BasePydanticVectorStore):
                 Defaults to None.
             metadata_fields (List[str]): List of metadata fields to store in the
                 index (only supports TAG fields).
-            redis_url (str): URL for the redis instance.
-                Defaults to "redis://localhost:6379".
             overwrite (bool): Whether to overwrite the index if it already exists.
                 Defaults to False.
             kwargs (Any): Additional arguments to pass to the redis client.
@@ -108,51 +99,51 @@ class RedisVectorStore(BasePydanticVectorStore):
             >>> vector_store = RedisVectorStore(
             >>>     index_name="my_index",
             >>>     index_prefix="llama_index",
-            >>>     index_args={"algorithm": "HNSW", "m": 16, "ef_construction": 200,
-                "distance_metric": "cosine"},
+            >>>     vector_field_args={"name": "embedding", "algorithm": "HNSW", "m": 16, "ef_construction": 200, "distance_metric": "cosine"},
             >>>     redis_url="redis://localhost:6379/",
             >>>     overwrite=True)
         """
-        try:
-            import redis
-            # TODO: is this necessary at this point??
-        except ImportError:
-            raise ValueError(
-                "Could not import redis python package. "
-                "Please install it with `pip install redis`."
-            )
 
-        # Create LlamaIndexSchema and Index
-        # TODO: favor / deprecate one of these...
-        vector_field = str(self._index_args.get("vector_field"))
-        vector_key = str(self._index_args.get("vector_key"))
-        self.schema = LlamaIndexSchema(
-            name=index_name,
-            prefix=index_prefix+prefix_ending,
-            vector_field_name=vector_field or vector_key or "vector",
-            metadata_fields=metadata_fields
-        )
-        self.index = SearchIndex(schema=self.schema, redis_url=redis_url)
+        if "redis_url" in kwargs:
+            client = Redis.from_url(kwargs.pop("redis_url"))
+            _logger.warning(
+                "Deprecation warning: 'redis_url' is deprecated, in the future please provide a Redis client instance"
+            )
 
         if "index_args" in kwargs:
             vector_field_args = kwargs.pop("index_args")
-            ## TODO: raise deprecation warning
+            _logger.warning(
+                "Deprecation warning: 'index_args' is deprecated, in the future please use 'vector_field_args' instead."
+            )
 
         self._vector_field_args = vector_field_args or {}
         self._overwrite = overwrite
-        self._return_fields = [
-            "id",
-            "doc_id",
-            "text",
-            self.schema.vector_field_name,
-            "vector_score",
-            "_node_content",
-        ]
 
+        # Create LlamaIndexSchema and Index
+        vector_field_name = self._get_vector_field_name()
+        self.schema = LlamaIndexSchema(
+            name=index_name,
+            prefix=index_prefix+prefix_ending,
+            vector_field_name=vector_field_name,
+            metadata_fields=metadata_fields
+        )
+        self.index = SearchIndex(schema=self.schema)
+        self.index.set_client(client)
+        self._return_fields = [
+            "id", "doc_id", "text", vector_field_name, "vector_score", "_node_content",
+        ]
         super().__init__()
 
+    def _get_vector_field_name(self) -> str:
+        """Get the vector field name."""
+        # handles backwards compatibility
+        vector_field = self._vector_field_args.pop("vector_field", None)
+        vector_key = self._vector_field_args.pop("vector_key", None)
+        name = self._vector_field_args.get("name", "vector")
+        return name or vector_field or vector_key
+
     @property
-    def client(self) -> "RedisType":
+    def client(self) -> Redis:
         """Return the redis client instance."""
         return self.index.client
 
@@ -168,18 +159,21 @@ class RedisVectorStore(BasePydanticVectorStore):
         Raises:
             ValueError: If the index already exists and overwrite is False.
         """
-        # check to see if empty document list was passed
+        # Check to see if empty document list was passed
         if len(nodes) == 0:
             return []
 
-        # Check vector dims in schema?
-        self._vector_field_args["dims"] = len(nodes[0].get_embedding())
+        if not self.index.exists() or self._overwrite == True:
+            # Update vector dims in schema
+            self._vector_field_args["dims"] = len(nodes[0].get_embedding())
+            # Make sure to add the vector field
+            if self.schema.vector_field_name not in self.schema.field_names:
+                self.schema.add_field(
+                    "vector", name=self.schema.vector_field_name, **self._vector_field_args
+                )
 
-        # create the index (using the overwrite policy defined by user)
+        # Create the index using user-defined overwrite policy
         self.index.create(overwrite=self._overwrite)
-
-        # Make sure vector field is added to the index schema
-        self.schema.add_field("vector", **self._vector_field_args)
 
         def preprocess_node(node: BaseNode) -> Dict[str, Any]:
             obj = {
@@ -193,14 +187,13 @@ class RedisVectorStore(BasePydanticVectorStore):
             )
             return {**obj, **additional_metadata}
 
-        # TODO: need a better way to do this here...
-        ids = [node.node_id for node in nodes]
-
-        self.index.load(
-            nodes,
-            key_field="id",
-            preprocess=preprocess_node
+        # Load data to the index
+        raw_ids = self.index.load(
+            nodes, key_field="id", preprocess=preprocess_node
         )
+        ids = [
+            id.strip(self.index.prefix + self.index.key_separator) for id in raw_ids
+        ]
 
         _logger.info(f"Added {len(ids)} documents to index {self.index._name}")
         return ids
@@ -213,27 +206,31 @@ class RedisVectorStore(BasePydanticVectorStore):
             ref_doc_id (str): The doc_id of the document to delete.
 
         """
-        # find all documents that match a doc_id
+        # Find docs in the index that match the document_id
         doc_filter = Tag("doc_id") == ref_doc_id
-        results = self.index.search(str(doc_filter))
-        # TODO does this actually return all results here?? or only partial?
-        if len(results.docs) == 0:
+        total = self.index.query(CountQuery(doc_filter))
+        results = self.index.query(FilterQuery(
+            return_fields=["id"],
+            filter_expression=doc_filter,
+            num_results=total
+        ))
+        if len(results) == 0:
             # don't raise an error but warn the user that doc wasn't found
             # could be a result of eviction policy
             _logger.warning(
                 f"Document with doc_id {ref_doc_id} not found "
-                f"in index {self.index._name}"
+                f"in index {self.index.name}"
             )
             return
 
         # clean up keys
         with self.index.client.pipeline(transaction=False) as pipe:
-            for doc in results.docs:
-                pipe.delete(doc.id)
+            for doc in results:
+                pipe.delete(doc["id"])
             pipe.execute()
 
         _logger.info(
-            f"Deleted {len(results.docs)} documents from index {self.index.name}"
+            f"Deleted {len(results)} documents from index {self.index.name}"
         )
 
     def delete_index(self) -> None:
@@ -241,20 +238,77 @@ class RedisVectorStore(BasePydanticVectorStore):
         _logger.info(f"Deleting index {self.index._name}")
         self.index.delete(drop=True)
 
+    @staticmethod
+    def _create_redis_filter(self, metadata_filters: MetadataFilters) -> FilterExpression:
+        """_summary_
+
+        Args:
+            metadata_filters (MetadataFilters): _description_
+
+        Returns:
+            FilterExpression: _description_
+        """
+        # Currently only supports TAG matches
+        # Index must be created with the metadata field in the index schema
+        # otherwise this will raise an error
+        filter_expression = FilterExpression("*")
+        for filter in metadata_filters.filters:
+            if filter.key not in self.schema.field_names:
+                raise ValueError(f"{filter.key} field was not indexed as part of the schema.")
+            filter_expression = filter_expression & (Tag(filter.key) == filter.value)
+        return filter_expression
+
+    def _create_redis_query(self, query: VectorStoreQuery) -> VectorQuery:
+        """Creates a RedisQuery from a VectorStoreQuery."""
+        filters = self._create_redis_filter(query.filters)
+        redis_query = VectorQuery(
+            vector=query.query_embedding,
+            vector_field_name=self.schema.vector_field_name,
+            return_fields=self._return_fields,
+            num_results=query.similarity_top_k
+        )
+        redis_query.set_filter(filters)
+        return redis_query
+
+    def _extract_node_and_score(self, doc, redis_query: VectorQuery):
+        """Extracts a node and its score from a document."""
+        try:
+            node = metadata_dict_to_node({"_node_content": doc["_node_content"]})
+            node.text = doc["text"]
+        except Exception:
+            # Handle legacy metadata format
+            node = TextNode(
+                text=doc["text"],
+                id_=doc["id"],
+                embedding=None,
+                relationships={NodeRelationship.SOURCE: RelatedNodeInfo(node_id=doc["doc_id"])}
+            )
+        score = 1 - float(doc[redis_query.DISTANCE_ID])
+        return node, score
+
+    def _process_query_results(self, results, redis_query: VectorQuery) -> VectorStoreQueryResult:
+        """Processes query results and returns a VectorStoreQueryResult."""
+        ids, nodes, scores = [], [], []
+        for doc in results:
+            node, score = self._extract_node_and_score(doc, redis_query)
+            ids.append(doc["id"])
+            nodes.append(node)
+            scores.append(score)
+        _logger.info(f"Found {len(nodes)} results for query with id {ids}")
+        return VectorStoreQueryResult(nodes=nodes, ids=ids, similarities=scores)
+
     def query(self, query: VectorStoreQuery, **kwargs: Any) -> VectorStoreQueryResult:
         """Query the index.
 
         Args:
-            query (VectorStoreQuery): query object
+            query (VectorStoreQuery): Query object.
 
         Returns:
-            VectorStoreQueryResult: query result
+            VectorStoreQueryResult: Query result.
 
         Raises:
-            ValueError: If query.query_embedding is None.
-            redis.exceptions.RedisError: If there is an error querying the index.
-            redis.exceptions.TimeoutError: If there is a timeout querying the index.
-            ValueError: If no documents are found when querying the index.
+            ValueError: If query.query_embedding is None or no documents are found.
+            RedisError: If there is an error querying the index.
         """
         from redis.exceptions import RedisError
         from redis.exceptions import TimeoutError as RedisTimeoutError
@@ -262,115 +316,19 @@ class RedisVectorStore(BasePydanticVectorStore):
         if not query.query_embedding:
             raise ValueError("Query embedding is required for querying.")
 
-        redis_query = VectorQuery(
-            vector=query.query_embedding,
-            vector_field_name=self.schema.vector_field_name,
-            return_fields=self._return_fields,
-            num_results=query.similarity_top_k
-        )
-        filters = create_filter_expression(query.filters)
-        redis_query.set_filter(filters)
-
-        _logger.info(f"Querying index {self.index.name} with filters {filters}")
+        redis_query = self._create_redis_query(query)
+        _logger.info(f"Querying index {self.index.name} with filters {redis_query.filters}")
 
         try:
             results = self.index.query(redis_query)
-        except RedisTimeoutError as e:
-            _logger.error(f"Query timed out on {self.index.name}: {e}")
-            raise
-        except RedisError as e:
+        except (RedisTimeoutError, RedisError) as e:
             _logger.error(f"Error querying {self.index.name}: {e}")
             raise
 
-        if len(results) == 0:
+        if not results:
             raise ValueError(
-                f"No docs found on index '{self.index.name}' with "
-                f"prefix '{self.index.prefix}' and filters '{filters}'. "
-                "* Did you originally create the index with a different prefix? "
-                "* Did you index your metadata fields when you created the index?"
+                f"No docs found on index '{self.index.name}' with prefix '{self.index.prefix}' "
+                "and filters '{redis_query.filters}'. * Check the index prefix and metadata fields."
             )
 
-        ids = []
-        nodes = []
-        scores = []
-        for doc in results:
-            try:
-                node = metadata_dict_to_node({"_node_content": doc["_node_content"]})
-                node.text = doc["text"]
-            except Exception:
-                # TODO: Legacy support for old metadata format
-                node = TextNode(
-                    text=doc["text"],
-                    id_=doc["id"],
-                    embedding=None,
-                    relationships={
-                        NodeRelationship.SOURCE: RelatedNodeInfo(node_id=doc["doc_id"])
-                    },
-                )
-            ids.append(doc["id"])
-            nodes.append(node)
-            scores.append(1 - float(doc[redis_query.DISTANCE_ID]))
-
-        _logger.info(f"Found {len(nodes)} results for query with id {ids}")
-        return VectorStoreQueryResult(nodes=nodes, ids=ids, similarities=scores)
-
-    def _create_vector_field(self) -> "VectorField":
-        """Create a RediSearch VectorField.
-
-        Args:
-            name (str): The name of the field.
-            algorithm (str): The algorithm used to index the vector.
-            dims (int): The dimensionality of the vector.
-            datatype (str): The type of the vector. default: FLOAT32
-            distance_metric (str): The distance metric used to compare vectors.
-            initial_cap (int): The initial capacity of the index.
-            block_size (int): The block size of the index.
-            m (int): The number of outgoing edges in the HNSW graph.
-            ef_construction (int): Number of maximum allowed potential outgoing edges
-                            candidates for each node in the graph,
-                            during the graph building.
-            ef_runtime (int): The umber of maximum top candidates to hold during the
-                KNN search
-
-        Returns:
-            A RediSearch VectorField.
-        """
-        DEFAULTS = {
-            "dims": 1536,
-            "algorithm": "FLAT",
-            "datatype": "FLOAT32",
-            "distance_metric": "COSINE",
-            "initial_cap": None,
-            "block_size": None,
-            "m": 16,
-            "ef_construction": 200,
-            "ef_runtime": 10,
-            "epsilon": 0.8,
-        }
-        
-        algorithm = self._vector_field_args.get("algorithm", "flat")
-        
-        if algorithm.upper() == "HNSW":
-            return {
-                "name": self.schema.vector_field_name,
-                **DEFAULTS,
-                **self._vector_field_args
-            }
-                "type": "hnsw",
-                "dims": dims,
-                "distance": distance_metric.upper(),
-                "m": m,
-                "ef_construction": ef_construction,
-                "ef_runtime": ef_runtime,
-                "epsilon": epsilon,
-                "initial_cap": initial_cap
-            }
-        else:
-            return {
-                "name": name,
-                "type": "flat",
-                "dims": dims,
-                "distance": distance_metric.upper(),
-                "initial_cap": initial_cap,
-                "block_size": block_size,
-            }
+        return self._process_query_results(results, redis_query)

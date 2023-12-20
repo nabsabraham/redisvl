@@ -13,6 +13,7 @@ class LlamaIndexSchema(IndexSchema):
     id_field_name: str = "id"
     doc_id_field_name: str = "doc_id"
     text_field_name: str = "text"
+    vector_field_name: str = "vector"
     default_vector_field_args: Dict[str, Any] = {
         "dims": 1536,
         "algorithm": "FLAT",
@@ -31,7 +32,7 @@ class LlamaIndexSchema(IndexSchema):
         name: str,
         prefix: str,
         vector_field_name: str,
-        metadata_fields: Optional[List[str]] = [],
+        metadata_fields: List[str],
         **kwargs,
     ):
         # Construct the base base index schema
@@ -45,15 +46,10 @@ class LlamaIndexSchema(IndexSchema):
         self.add_field("text", name=self.text_field_name, weight=1.0)
 
         # Add user-specified metadata fields
-        if metadata_fields:
-            for metadata_field in metadata_fields:
-                # TODO: allow addition of text fields as metadata?
-                self.add_field("tag", name=metadata_field, sortable=False)
+        for metadata_field in metadata_fields:
+            # TODO: allow addition of text fields as metadata?
+            self.add_field("tag", name=metadata_field, sortable=False)
 
         class Config:
             # Ignore extra fields passed in kwargs
             ignore_extra = True
-
-    # @property
-    # def vector_field(self) -> BaseVectorField:
-    #     return self.fields["vector"][0]  # type: ignore
