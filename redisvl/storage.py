@@ -175,7 +175,7 @@ class BaseStorage:
         ttl: Optional[int] = None,
         preprocess: Optional[Callable] = None,
         batch_size: Optional[int] = None,
-    ):
+    ) -> List[str]:
         """Write a batch of objects to Redis as hash entries.
 
         Args:
@@ -196,6 +196,7 @@ class BaseStorage:
             ValueError: If the length of provided keys does not match the
                 length of objects.
         """
+        stored_keys: List[str] = []
         if keys and len(keys) != len(objects):  # type: ignore
             raise ValueError("Length of keys does not match the length of objects")
 
@@ -216,6 +217,7 @@ class BaseStorage:
                 obj = self._preprocess(obj, preprocess)
                 self._validate(obj)
                 self._set(pipe, key, obj)
+                stored_keys.append(key)
                 if ttl:
                     pipe.expire(key, ttl)  # Set TTL if provided
                 # execute mini batch
@@ -224,6 +226,8 @@ class BaseStorage:
             # clean up batches if needed
             if i % batch_size != 0:
                 pipe.execute()
+
+        return stored_keys
 
     async def awrite(
         self,
@@ -234,7 +238,7 @@ class BaseStorage:
         ttl: Optional[int] = None,
         preprocess: Optional[Callable] = None,
         concurrency: Optional[int] = None,
-    ):
+    ) -> List[str]:
         """Asynchronously write objects to Redis as hash entries with
         concurrency control.
 
@@ -267,7 +271,7 @@ class BaseStorage:
         semaphore = asyncio.Semaphore(concurrency)
         keys_iterator = iter(keys) if keys else None
 
-        async def _load(obj: Dict[str, Any], key: Optional[str] = None) -> None:
+        async def _load(obj: Dict[str, Any], key: Optional[str] = None) -> str:
             async with semaphore:
                 if key is None:
                     key = self._create_key(obj, key_field)
@@ -276,6 +280,7 @@ class BaseStorage:
                 await self._aset(redis_client, key, obj)
                 if ttl:
                     await redis_client.expire(key, ttl)
+                return key
 
         if keys_iterator:
             tasks = [
@@ -284,7 +289,9 @@ class BaseStorage:
         else:
             tasks = [asyncio.create_task(_load(obj)) for obj in objects]
 
-        await asyncio.gather(*tasks)
+        stored_keys: List[str] = await asyncio.gather(*tasks)
+
+        return stored_keys
 
     def get(
         self, redis_client: Redis, keys: Iterable[str], batch_size: Optional[int] = None

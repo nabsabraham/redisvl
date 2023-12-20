@@ -410,7 +410,7 @@ class SearchIndex:
         preprocess: Optional[Callable] = None,
         batch_size: Optional[int] = None,
         **kwargs,
-    ):
+    ) -> List[str]:
         """Load a batch of objects to Redis.
 
         Args:
@@ -438,7 +438,7 @@ class SearchIndex:
             >>>     return record
             >>> index.load(data, preprocess=func)
         """
-        self._storage.write(
+        return self._storage.write(
             self._redis_conn.client,  # type: ignore
             objects=data,
             key_field=key_field,
@@ -593,7 +593,7 @@ class SearchIndex:
             >>>     return record
             >>> await index.load(data, preprocess=func)
         """
-        await self._storage.awrite(
+        return await self._storage.awrite(
             self._redis_conn.client,  # type: ignore
             objects=data,
             key_field=key_field,
