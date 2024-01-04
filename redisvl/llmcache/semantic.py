@@ -94,6 +94,8 @@ class SemanticCache(BaseLLMCache):
             ValueError: If the threshold is not between 0 and 1.
             ValueError: If the index name or prefix is not provided
         """
+        super().__init__(ttl)
+
         # Check for index_name in kwargs
         if "index_name" in kwargs:
             name = kwargs.pop("index_name")

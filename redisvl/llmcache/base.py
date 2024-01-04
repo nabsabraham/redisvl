@@ -1,61 +1,37 @@
 import hashlib
-from typing import List, Optional
+from abc import ABC, abstractmethod
+from typing import Optional, Any
 
-from redisvl.index import SearchIndex
+from redis import Redis
 
 
-class BaseLLMCache:
-    _ttl: Optional[int] = None
+class BaseLLMCache(ABC):
+
+    def __init__(self, prefix: str, redis_client: Redis, ttl: Optional[int] = None):
+        self.prefix = prefix
+        self.redis_client = redis_client
+        self._ttl = ttl
 
     @property
     def ttl(self) -> Optional[int]:
-        """Returns the TTL for the cache.
-
-        Returns:
-            Optional[int]: The TTL for the cache.
-        """
         return self._ttl
 
     def set_ttl(self, ttl: Optional[int] = None):
-        """Sets the TTL for the cache.
+        if ttl and not isinstance(ttl, int):
+            raise ValueError(f"TTL must be an integer value, got {ttl}")
+        self._ttl = ttl
 
-        Args:
-            ttl (Optional[int], optional): The optional time-to-live expiration
-                for the cache.
-
-        Raises:
-            ValueError: If the time-to-live value is not an integer.
-        """
-        if ttl:
-            if not isinstance(ttl, int):
-                raise ValueError(f"TTL must be an integer value, got {ttl}")
-            self._ttl = int(ttl)
-
+    @abstractmethod
     def clear(self) -> None:
-        """Clear the LLMCache of all keys in the index."""
-        raise NotImplementedError
+        pass
 
-    def check(
-        self,
-        prompt: Optional[str] = None,
-        vector: Optional[List[float]] = None,
-        num_results: int = 1,
-        return_fields: Optional[List[str]] = None,
-        **kwargs,
-    ) -> List[dict]:
-        raise NotImplementedError
+    @abstractmethod
+    def check(self, *args, **kwargs) -> Any:
+        pass
 
-    def store(
-        self,
-        prompt: str,
-        response: str,
-        vector: Optional[List[float]] = None,
-        metadata: Optional[dict] = {},
-    ) -> None:
-        """Stores the specified key-value pair in the cache along
-        with metadata."""
-        raise NotImplementedError
+    @abstractmethod
+    def store(self, *args, **kwargs) -> None:
+        pass
 
-    def hash_input(self, prompt: str):
-        """Hashes the input using SHA256."""
+    def hash_input(self, prompt: str) -> str:
         return hashlib.sha256(prompt.encode("utf-8")).hexdigest()

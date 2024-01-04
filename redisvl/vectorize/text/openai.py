@@ -4,6 +4,7 @@ from tenacity import retry, stop_after_attempt, wait_random_exponential
 from tenacity.retry import retry_if_not_exception_type
 
 from redisvl.vectorize.base import BaseVectorizer
+from redisvl.llmcache.embedding import EmbeddingCache
 
 # ignore that openai isn't imported
 # mypy: disable-error-code="name-defined"
@@ -18,7 +19,12 @@ class OpenAITextVectorizer(BaseVectorizer):
     https://api.openai.com/.
     """
 
-    def __init__(self, model: str, api_config: Optional[Dict] = None):
+    def __init__(
+        self,
+        model: str,
+        api_config: Optional[Dict] = None,
+        cache: Optional[EmbeddingCache] = None
+    ):
         """Initialize the OpenAI vectorizer.
 
         Args:
@@ -47,6 +53,7 @@ class OpenAITextVectorizer(BaseVectorizer):
         openai.api_key = api_config["api_key"]
         self._model_client = openai.Embedding
         self._dims = self._set_model_dims()
+        self.cache = cache
 
     def _set_model_dims(self) -> int:
         try:
@@ -74,22 +81,17 @@ class OpenAITextVectorizer(BaseVectorizer):
         batch_size: int = 10,
         as_buffer: bool = False,
     ) -> List[List[float]]:
-        """Embed many chunks of texts using the OpenAI API.
+        """
+        Embed many chunks of texts using the OpenAI API.
 
         Args:
             texts (List[str]): List of text chunks to embed.
-            preprocess (Optional[Callable], optional): Optional preprocessing callable to
-                perform before vectorization. Defaults to None.
-            batch_size (int, optional): Batch size of texts to use when creating
-                embeddings. Defaults to 10.
-            as_buffer (bool, optional): Whether to convert the raw embedding
-                to a byte string. Defaults to False.
+            preprocess (Optional[Callable], optional): Optional preprocessing callable.
+            batch_size (int, optional): Batch size of texts to use when creating embeddings.
+            as_buffer (bool, optional): Whether to convert the raw embedding to a byte string.
 
         Returns:
             List[List[float]]: List of embeddings.
-
-        Raises:
-            TypeError: If the wrong input type is passed in for the test.
         """
         if not isinstance(texts, list):
             raise TypeError("Must pass in a list of str values to embed.")
@@ -97,12 +99,28 @@ class OpenAITextVectorizer(BaseVectorizer):
             raise TypeError("Must pass in a list of str values to embed.")
 
         embeddings: List = []
-        for batch in self.batchify(texts, batch_size, preprocess):
-            response = self._model_client.create(input=batch, engine=self._model)
-            embeddings += [
-                self._process_embedding(r["embedding"], as_buffer)
-                for r in response["data"]
-            ]
+        for text_batch in self.batchify(texts, batch_size, preprocess):
+            # Check cache first
+            cached_results = self.cache.check(text_batch, batch=True)
+            to_embed = [text for text, cached in zip(text_batch, cached_results) if cached is None]
+            new_embeddings = []
+
+            if to_embed:
+                # Call embedding model API only for uncached texts
+                response = self._model_client.create(input=to_embed, engine=self._model)
+                new_embeddings = [
+                    self._process_embedding(r["embedding"], as_buffer)
+                    for r in response["data"]
+                ]
+
+                # Store new embeddings in cache
+                cache_entries = [{"prompt": text, "vector": embedding} for text, embedding in zip(to_embed, new_embeddings)]
+                self.cache.store(cache_entries, batch=True)
+
+            # Merge cached and newly computed embeddings
+            embedding_iter = iter(new_embeddings)
+            embeddings += [cached if cached is not None else next(embedding_iter) for cached in cached_results]
+
         return embeddings
 
     @retry(
@@ -136,6 +154,11 @@ class OpenAITextVectorizer(BaseVectorizer):
 
         if preprocess:
             text = preprocess(text)
+
+        if self.cache:
+            if cached := self.cache.check([text]):
+                return cached[0]
+
         result = self._model_client.create(input=[text], engine=self._model)
         return self._process_embedding(result["data"][0]["embedding"], as_buffer)
 
