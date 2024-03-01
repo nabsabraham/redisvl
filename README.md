@@ -68,6 +68,7 @@ Choose from multiple Redis deployment options:
     docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
     ```
 3. [Redis Enterprise](https://redis.com/redis-enterprise/): Commercial, self-hosted database
+4. [Azure Cache for Redis Enterprise](https://learn.microsoft.com/azure/azure-cache-for-redis/quickstart-create-redis-enterprise): Fully managed Redis Enterprise on Azure
 
 > Enhance your experience and observability with the free [Redis Insight GUI](https://redis.com/redis-enterprise/redis-insight/).
 
@@ -80,8 +81,6 @@ Choose from multiple Redis deployment options:
 
     [Load a schema](https://www.redisvl.com/user_guide/getting_started_01.html#example-schema-creation) from a [YAML file](schemas/schema.yaml):
     ```yaml
-    version: '0.1.0'
-
     index:
         name: user-index-v1
         prefix: user
@@ -231,7 +230,7 @@ embedding = co.embed(
 
 embeddings = co.embed_many(
     texts=["my document chunk content", "my other document chunk content"],
-    search_type="search_documents"
+    input_type="search_document"
 )
 ```
 
